@@ -1,0 +1,31 @@
+name: CI Pipeline
+
+on:
+  workflow_dispatch:
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Construir proyecto
+        run: echo "Construyendo proyecto..."
+
+      - name: Ejecutar tests
+        run: echo "Ejecutando tests..."
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    # Una vez creado en Environment en los ajustes del repo de Github
+    # y haber activado "Required reviewers" añadiendo un usuario
+    environment:
+      name: approval
+
+    steps:
+      - name: Despliegue
+        run: echo "Desplegando..."
