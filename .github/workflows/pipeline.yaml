@@ -1,7 +1,7 @@
 name: CI Pipeline
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: # Indica que la ejecución es manual
 
 
 jobs:
@@ -21,10 +21,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
 
-    # Una vez creado en Environment en los ajustes del repo de Github
-    # y haber activado "Required reviewers" añadiendo un usuario
     environment:
-      name: approval
+      name: test-approval # Pongo el environment que contiene los Required reviewers
 
     steps:
       - name: Despliegue
