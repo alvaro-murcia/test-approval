@@ -1,29 +1,40 @@
+# Nombre del workflow
 name: CI Pipeline
 
+# Evento que lanza el pipeline
 on:
-  workflow_dispatch: # Indica que la ejecución es manual
+  workflow_dispatch: # Permite ejecutar el pipeline manualmente desde GitHub (botón "Run workflow")
 
-
+# Definición de los jobs (etapas del pipeline)
 jobs:
+
+  # Job de build (construcción + tests)
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Ejecuta en una máquina Linux proporcionada por GitHub
 
     steps:
+      # Paso 1: Descargar el código del repositorio
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
 
+      # Paso 2: Construcción del proyecto
       - name: Construir proyecto
-        run: echo "Construyendo proyecto..."
+        run: echo "Construyendo proyecto..."  # Aquí iría un npm build, mvn package, etc.
 
+      # Paso 3: Ejecutar tests
       - name: Ejecutar tests
-        run: echo "Ejecutando tests..."
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
+        run: echo "Ejecutando tests..."  # Aquí irían tests reales (npm test, pytest, etc.)
 
+  # Job de despliegue (deploy)
+  deploy:
+    runs-on: ubuntu-latest # Ejecuta en una máquina Linux proporcionada por GitHub
+
+    needs: build  # Este job solo se ejecuta si el build termina correctamente
+
+    # Environment con aprobación manual
     environment:
-      name: test-approval # Pongo el environment que contiene los Required reviewers
+      name: test-approval  # Environment configurado en GitHub con "Required reviewers"
 
     steps:
       - name: Despliegue
-        run: echo "Desplegando..."
+        run: echo "Desplegando..."  # Aquí iría el deploy real (docker, ssh, cloud, etc.)
